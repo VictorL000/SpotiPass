@@ -1,12 +1,15 @@
+plugins {
+    alias(libs.plugins.kotlin.android)
+}
 apply plugin: 'com.android.library'
 
 android {
     namespace = "com.gupuru.streetpass"
-    compileSdkVersion 34
+    compileSdk 35
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
     }
     buildTypes {
         release {
@@ -17,6 +20,9 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
 }
