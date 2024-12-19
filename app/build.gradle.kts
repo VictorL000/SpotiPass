@@ -72,4 +72,5 @@ dependencies {
     implementation(libs.auth.v210)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation ( "com.squareup.okhttp3:logging-interceptor:4.12.0" )
 }
