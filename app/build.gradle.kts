@@ -1,9 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
+
+val localProperties = Properties()
+file("../local.properties").inputStream().use { localProperties.load(it) }
+
+val clientSecret: String = localProperties.getProperty("CLIENT_SECRET") ?: "'default_value'"
+val redirectUri: String = localProperties.getProperty("REDIRECT_URI") ?: "'default_value'"
+val clientId: String = localProperties.getProperty("CLIENT_ID") ?: "'default_value'"
 
 android {
     namespace = "com.victorl000.spotipass"
@@ -24,6 +33,11 @@ android {
         )
     }
 
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -31,17 +45,22 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "CLIENT_SECRET", "\"${clientSecret}\"")
+            buildConfigField("String", "CLIENT_ID", "\"${clientId}\"")
+            buildConfigField("String", "REDIRECT_URI", "\"${redirectUri}\"")
+        }
+        debug {
+            buildConfigField("String", "CLIENT_SECRET", "\"${clientSecret}\"")
+            buildConfigField("String", "CLIENT_ID", "\"${clientId}\"")
+            buildConfigField("String", "REDIRECT_URI", "\"${redirectUri}\"")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
+        jvmTarget = "17"
     }
 }
 

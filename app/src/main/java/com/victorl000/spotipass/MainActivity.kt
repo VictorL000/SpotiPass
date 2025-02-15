@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationResponse
+import com.victorl000.spotipass.ui.homeview.HomeView
 import com.victorl000.spotipass.ui.loginview.LoginView
 import com.victorl000.spotipass.ui.loginview.LoginViewModel
 import com.victorl000.spotipass.ui.theme.SpotiPassTheme
@@ -38,8 +39,6 @@ import gupuru.streetpassble.parcelable.TransferData
 import kotlinx.serialization.Serializable
 
 private const val LOGIN_REQUEST_CODE = 1337;
-private const val REDIRECT_URI = "localhost:3000";
-private const val CLIENT_ID = "b7466ef8100441a292c63908d0104488"
 private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
@@ -100,7 +99,15 @@ class MainActivity : ComponentActivity() {
                     startDestination = LoginScreen
                 ) {
                     composable<LoginScreen> {
-                       LoginView()
+                        LoginView(
+                            onLogin = {
+                                navController.navigate(HomeScreen)
+                                BuildConfig.CLIENT_SECRET
+                            }
+                        )
+                    }
+                    composable<HomeScreen> {
+                       HomeView()
                     }
                 }
             }
@@ -115,3 +122,6 @@ class MainActivity : ComponentActivity() {
 
 @Serializable
 object LoginScreen
+
+@Serializable
+object HomeScreen

@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
@@ -21,20 +20,18 @@ interface AccountService {
         @Header("Authorization") apiKey: String,
     ) : AccountResponse
 
-
     @FormUrlEncoded
     @POST("api/token")
-    suspend fun getAccessToken(
-        @Field("grant_type") grantType: String = "authorization_code",
+    fun getAccessToken(
         @Field("code") code: String,
         @Field("redirect_uri") redirectUri: String,
+        @Field("grant_type") grantType: String = "authorization_code",
         @Field("client_id") clientId: String,
-        @Field("code_verifier") codeVerifier: String
-    ): Response<SpotifyTokenResponse>
+        @Field("client_secret") clientSecret: String,
+    ): Call<SpotifyTokenResponse>
 }
 
 object SpotifyApi {
-
 
     val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = Level.BODY

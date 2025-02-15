@@ -13,17 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.victorl000.spotipass.BuildConfig
 
 private const val TAG = "LoginView"
 
 @Composable
-fun LoginView() {
+fun LoginView(onLogin: () -> Unit) {
     val vm = viewModel<LoginViewModel>()
     val context = LocalContext.current
 
     val authLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
-    ) { result -> vm.getSpotifyLoginResponse(context, result) }
+    ) { result -> vm.getSpotifyLoginResponse(result, onLogin) }
 
     Column (modifier = Modifier.padding(top = 200.dp).fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally){
         Button (onClick = {vm.login(context, authLauncher)}) {
