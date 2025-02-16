@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import gupuru.streetpassble.StreetPassBle
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Singleton
 
 @Module
@@ -25,9 +26,7 @@ object AppModule {
 //        }
 //    }
 //
-//    @Provides
-//    @Singleton
-//    fun provideBleRepository(api : BleApi, app : Application) : BleRepository {
-//        return BleRepositoryImpl(api, app)
-//    }
+    @Provides
+    @Singleton
+    fun provideDevicesStringFlow() : MutableStateFlow<String> = MutableStateFlow("None")
 }

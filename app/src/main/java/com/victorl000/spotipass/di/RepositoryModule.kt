@@ -8,13 +8,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-//@Module
-//@InstallIn(SingletonComponent::class)
-//abstract class RepositoryModule {
-//
-//    @Binds
-//    @Singleton
-//    abstract fun bindBleRepository(
-//        bleRepositoryImpl: BleRepositoryImpl
-//    ) : BleRepository
-//}
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindBleRepository(
+        bleRepositoryImpl: BleRepositoryImpl
+    ) : BleRepository
+}
