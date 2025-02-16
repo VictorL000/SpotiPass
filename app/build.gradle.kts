@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 val localProperties = Properties()
@@ -48,6 +50,7 @@ android {
             buildConfigField("String", "CLIENT_SECRET", "\"${clientSecret}\"")
             buildConfigField("String", "CLIENT_ID", "\"${clientId}\"")
             buildConfigField("String", "REDIRECT_URI", "\"${redirectUri}\"")
+            signingConfig = signingConfigs.getByName("debug")
         }
         debug {
             buildConfigField("String", "CLIENT_SECRET", "\"${clientSecret}\"")
@@ -61,6 +64,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+    sourceSets {
+
     }
 }
 
@@ -92,4 +98,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation ( "com.squareup.okhttp3:logging-interceptor:4.12.0" )
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
 }

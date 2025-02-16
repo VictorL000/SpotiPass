@@ -1,5 +1,6 @@
 package com.victorl000.spotipass.ui.homeview
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,10 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import dagger.hilt.android.AndroidEntryPoint
+import kotlin.getValue
 
-@Preview
 @Composable
-fun HomeView() {
+fun HomeView(
+    homeViewModel: HomeViewModel
+) {
+
     var selectedView = remember { mutableIntStateOf(0) }
     val items = listOf("Maps", "Home", "Profile")
     val selectedIcons = listOf(Icons.Filled.LocationOn, Icons.Filled.Home, Icons.Filled.Person)
@@ -46,5 +52,6 @@ fun HomeView() {
                 )
             }
         }
+        Button(onClick = {homeViewModel.say()}) {Text("what")}
     }
 }

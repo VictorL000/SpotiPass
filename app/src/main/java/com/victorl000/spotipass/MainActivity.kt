@@ -27,9 +27,13 @@ import androidx.navigation.compose.rememberNavController
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import com.victorl000.spotipass.ui.homeview.HomeView
+import com.victorl000.spotipass.ui.homeview.HomeViewModel
 import com.victorl000.spotipass.ui.loginview.LoginView
 import com.victorl000.spotipass.ui.loginview.LoginViewModel
 import com.victorl000.spotipass.ui.theme.SpotiPassTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_android_components_ViewModelComponent
 import gupuru.streetpassble.StreetPassBle
 import gupuru.streetpassble.parcelable.AdvertiseSuccess
 import gupuru.streetpassble.parcelable.DeviceData
@@ -41,9 +45,10 @@ import kotlinx.serialization.Serializable
 private const val LOGIN_REQUEST_CODE = 1337;
 private const val TAG = "MainActivity"
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     var streetPassBle = StreetPassBle(this)
-
+    private val homeViewModel : HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +101,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = LoginScreen
+                    startDestination = HomeScreen
                 ) {
                     composable<LoginScreen> {
                         LoginView(
@@ -107,7 +112,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable<HomeScreen> {
-                       HomeView()
+                       HomeView(homeViewModel)
                     }
                 }
             }
