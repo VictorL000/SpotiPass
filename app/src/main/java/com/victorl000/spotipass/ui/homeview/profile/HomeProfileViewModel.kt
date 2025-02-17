@@ -1,4 +1,4 @@
-package com.victorl000.spotipass.ui.homeview
+package com.victorl000.spotipass.ui.homeview.profile
 
 import androidx.lifecycle.ViewModel
 import com.victorl000.spotipass.domain.repository.BleRepository
@@ -9,20 +9,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
+
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeProfileViewModel @Inject constructor(
     private val repository: BleRepository,
     private val flow: MutableStateFlow<SPTransferData?>
 ) : ViewModel() {
-    init {
-        startBLEService()
-    }
     fun startBLEService() {
         repository.bleStart()
     }
-//    fun updateValue(newValue: SPTransferData?) {
-//        flow.value = newValue
-//    }
-//
-//    fun observeFlow(): StateFlow<SPTransferData?> = flow.asStateFlow()
+    fun updateValue(newValue: SPTransferData?) {
+        flow.value = newValue
+    }
+
+    fun observeFlow(): StateFlow<SPTransferData?> = flow.asStateFlow()
 }

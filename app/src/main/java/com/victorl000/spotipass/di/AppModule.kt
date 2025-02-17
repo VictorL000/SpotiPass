@@ -1,14 +1,10 @@
 package com.victorl000.spotipass.di
 
-import android.app.Application
-import com.victorl000.spotipass.apis.BleApi
-import com.victorl000.spotipass.apis.repository.BleRepositoryImpl
-import com.victorl000.spotipass.domain.repository.BleRepository
+import com.victorl000.spotipass.model.SPTransferData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import gupuru.streetpassble.StreetPassBle
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Singleton
 
@@ -28,5 +24,9 @@ object AppModule {
 //
     @Provides
     @Singleton
-    fun provideDevicesStringFlow() : MutableStateFlow<String> = MutableStateFlow("None")
+    fun provideTransferData() : MutableStateFlow<SPTransferData?> = MutableStateFlow(null)
+
+    @Provides
+    @Singleton
+    fun provideTransferListFlow() : MutableStateFlow<List<SPTransferData>> = MutableStateFlow(emptyList())
 }
