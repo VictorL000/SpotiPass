@@ -2,10 +2,24 @@ package com.victorl000.spotipass.ui.homeview.discover
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.ExitToApp
@@ -15,9 +29,21 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import com.victorl000.spotipass.model.SPTransferData
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 import javax.inject.Inject
 
 @Composable
@@ -25,8 +51,16 @@ fun HomeDiscoverView(
     homeDiscoverViewModel: HomeDiscoverViewModel
 ) {
     val discoverFlow = homeDiscoverViewModel.observeDiscoverListFlow().collectAsState()
-    LazyColumn {
-        discoverFlow.value.forEach {
+    DiscoveredProfileList(discoverFlow.value)
+}
+
+@Preview
+@Composable
+fun DiscoveredProfileList(
+    @PreviewParameter(DiscoverPreviewParameterProvider::class) items : List<SPTransferData>
+) {
+    LazyColumn (){
+        items.forEach {
             item {
                 DiscoveredProfileRow(it)
             }
@@ -39,12 +73,20 @@ fun DiscoveredProfileRow(
     profileData : SPTransferData
 ) {
     val context = LocalContext.current
-    Row {
-        Column {
-            Text(profileData.username)
-            Text(profileData.timestamp.toString())
+    Row (modifier = Modifier.padding(15.dp).fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
+        Box(modifier = Modifier.background(Color.Blue, CircleShape).size(45.dp))
+        Column (modifier = Modifier.padding(15.dp).weight(1f)){
+            Text(fontSize = 20.sp, text = profileData.username)
+            Text(timeAgo(profileData.timestamp))
         }
-        Button(onClick = {
+        Button(
+            contentPadding = PaddingValues(
+                start = 10.dp,
+                top = 6.dp,
+                end = 10.dp,
+                bottom = 6.dp
+            ),
+            onClick = {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(profileData.spotifyUrl))
             context.startActivity(browserIntent)
         }) {
@@ -53,5 +95,40 @@ fun DiscoveredProfileRow(
                 contentDescription = "Open in Spotify"
             )
         }
+    }
+}
+
+class DiscoverPreviewParameterProvider : PreviewParameterProvider<List<SPTransferData>> {
+    override val values = sequenceOf(
+        listOf(getMockAccount(), getMockAccount(), getMockAccount()),
+    )
+}
+
+private fun getMockAccount () = SPTransferData(
+    profileId = UUID.randomUUID().toString(),
+    username = "funniguy743",
+    spotifyUserId = "22zc36dej2wpy6dm23eu5bsqq",
+    spotifyUrl = "https://open.spotify.com/user/22zc36dej2wpy6dm23eu5bsqq?si=0ffbb5a380854a0c",
+    timestamp = LocalDateTime.now()
+)
+
+private fun timeAgo(timestamp: LocalDateTime): String {
+    val now = LocalDateTime.now()
+    val duration = Duration.between(timestamp, now)
+
+    return when {
+        duration.seconds < 60 -> "Just now"
+        duration.toMinutes() < 60 ->
+            "${duration.toMinutes()} minute${if (duration.toMinutes() == 1L) "" else "s"} ago"
+        duration.toHours() < 24 ->
+            "${duration.toHours()} hour${if (duration.toHours() == 1L) "" else "s"} ago"
+        duration.toDays() < 7 ->
+            "${duration.toDays()} day${if (duration.toDays() == 1L) "" else "s"} ago"
+        duration.toDays() < 30 ->
+            "${duration.toDays() / 7} week${if (duration.toDays() / 7 == 1L) "" else "s"} ago"
+        duration.toDays() < 365 ->
+            "${duration.toDays() / 30} month${if (duration.toDays() / 30 == 1L) "" else "s"} ago"
+        else ->
+            "${duration.toDays() / 365} year${if (duration.toDays() / 365 == 1L) "" else "s"} ago"
     }
 }

@@ -20,6 +20,7 @@ import java.util.TimeZone
 import java.util.UUID
 import javax.inject.Singleton
 import kotlin.random.Random
+import kotlin.random.nextLong
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,24 +29,25 @@ object DebugModule {
     @OptIn(DelicateCoroutinesApi::class)
     @Provides
     @Singleton
-    fun provideBleApi() : BleApi{
+    fun provideBleApi() : BleApi {
         return object : BleApi {
             override fun bleStart(appContext : Application, flow : MutableStateFlow<SPTransferData?>) {
                 GlobalScope.launch { // JUST FOR DEBUG PURPOSES
                     repeat(20) {
                         delay(2000)
-                        flow.value = getMockAccount()
+                        val minus = Random.nextLong((60*60))
+                        flow.value = getMockAccount(minus)
                     }
                 }
             }
         }
     }
-    private fun getMockAccount () = SPTransferData(
+    private fun getMockAccount (minusSeconds : Long) = SPTransferData(
         profileId = UUID.randomUUID().toString(),
         username = "funniguy743",
         spotifyUserId = "22zc36dej2wpy6dm23eu5bsqq",
         spotifyUrl = "https://open.spotify.com/user/22zc36dej2wpy6dm23eu5bsqq?si=0ffbb5a380854a0c",
-        timestamp = LocalDateTime.now()
+        timestamp = LocalDateTime.now().minusSeconds(minusSeconds)
     )
 //
 //    @Provides
