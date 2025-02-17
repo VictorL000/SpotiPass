@@ -3,27 +3,17 @@ package com.victorl000.spotipass.ui.homeview.discover
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.rounded.ExitToApp
-import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -38,13 +28,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
-import com.victorl000.spotipass.model.SPTransferData
+import com.victorl000.spotipass.model.SPReceivedData
 import java.time.Duration
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.UUID
-import javax.inject.Inject
 
 @Composable
 fun HomeDiscoverView(
@@ -57,7 +44,7 @@ fun HomeDiscoverView(
 @Preview
 @Composable
 fun DiscoveredProfileList(
-    @PreviewParameter(DiscoverPreviewParameterProvider::class) items : List<SPTransferData>
+    @PreviewParameter(DiscoverPreviewParameterProvider::class) items : List<SPReceivedData>
 ) {
     LazyColumn (){
         items.forEach {
@@ -70,7 +57,7 @@ fun DiscoveredProfileList(
 
 @Composable
 fun DiscoveredProfileRow(
-    profileData : SPTransferData
+    profileData : SPReceivedData
 ) {
     val context = LocalContext.current
     Row (modifier = Modifier.padding(15.dp).fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
@@ -98,13 +85,13 @@ fun DiscoveredProfileRow(
     }
 }
 
-class DiscoverPreviewParameterProvider : PreviewParameterProvider<List<SPTransferData>> {
+class DiscoverPreviewParameterProvider : PreviewParameterProvider<List<SPReceivedData>> {
     override val values = sequenceOf(
         listOf(getMockAccount(), getMockAccount(), getMockAccount()),
     )
 }
 
-private fun getMockAccount () = SPTransferData(
+private fun getMockAccount () = SPReceivedData(
     profileId = UUID.randomUUID().toString(),
     username = "funniguy743",
     spotifyUserId = "22zc36dej2wpy6dm23eu5bsqq",

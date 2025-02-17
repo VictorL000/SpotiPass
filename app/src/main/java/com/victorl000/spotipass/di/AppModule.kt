@@ -1,6 +1,7 @@
 package com.victorl000.spotipass.di
 
-import com.victorl000.spotipass.model.SPTransferData
+import com.victorl000.spotipass.model.SPProfile
+import com.victorl000.spotipass.model.SPReceivedData
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,11 +23,16 @@ object AppModule {
 //        }
 //    }
 //
-    @Provides
-    @Singleton
-    fun provideTransferData() : MutableStateFlow<SPTransferData?> = MutableStateFlow(null)
 
     @Provides
     @Singleton
-    fun provideTransferListFlow() : MutableStateFlow<List<SPTransferData>> = MutableStateFlow(emptyList())
+    fun provideTransferData() : MutableStateFlow<SPReceivedData?> = MutableStateFlow(null)
+
+    @Provides
+    @Singleton
+    fun provideTransferListFlow() : MutableStateFlow<List<SPReceivedData>> = MutableStateFlow(emptyList())
+
+    @Provides
+    @Singleton
+    fun provideProfileFlow() : MutableStateFlow<SPProfile?> = MutableStateFlow(null)
 }

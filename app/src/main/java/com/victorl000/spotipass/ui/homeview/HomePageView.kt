@@ -83,7 +83,7 @@ fun HomePageView(
 //                HomeMapsView(homeMapsViewModel)
             }
             composable<ProfileScreen> {
-//                HomeProfileView(homeProfileViewModel)
+                HomeProfileView(homeProfileViewModel)
             }
         }
     }
