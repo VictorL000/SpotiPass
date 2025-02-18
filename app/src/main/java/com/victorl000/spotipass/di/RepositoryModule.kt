@@ -2,9 +2,11 @@ package com.victorl000.spotipass.di
 
 import com.victorl000.spotipass.apis.repository.BleRepositoryImpl
 import com.victorl000.spotipass.apis.repository.CryptoRepositoryImpl
+import com.victorl000.spotipass.apis.repository.ProfileRepositoryImpl
 import com.victorl000.spotipass.apis.repository.SpotifyRepositoryImpl
 import com.victorl000.spotipass.domain.repository.BleRepository
 import com.victorl000.spotipass.domain.repository.CryptoRepository
+import com.victorl000.spotipass.domain.repository.ProfileRepository
 import com.victorl000.spotipass.domain.repository.SpotifyRepository
 import dagger.Binds
 import dagger.Module
@@ -27,6 +29,12 @@ abstract class RepositoryModule {
     abstract fun bindCryptoRepository(
         cryptoRepositoryImpl: CryptoRepositoryImpl
     ) : CryptoRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindProfileRepository(
+        profileRepositoryImpl: ProfileRepositoryImpl
+    ) : ProfileRepository
 
     @Binds
     @Singleton

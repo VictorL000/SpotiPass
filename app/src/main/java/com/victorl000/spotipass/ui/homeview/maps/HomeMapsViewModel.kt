@@ -13,14 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeMapsViewModel @Inject constructor(
     private val repository: BleRepository,
-    private val flow: MutableStateFlow<SPReceivedData?>
 ) : ViewModel() {
-    fun startBLEService() {
-        repository.bleStart()
-    }
-    fun updateValue(newValue: SPReceivedData?) {
-        flow.value = newValue
-    }
 
-    fun observeFlow(): StateFlow<SPReceivedData?> = flow.asStateFlow()
 }

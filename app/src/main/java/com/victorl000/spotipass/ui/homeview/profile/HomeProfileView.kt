@@ -2,6 +2,8 @@ package com.victorl000.spotipass.ui.homeview.profile
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.runtime.getValue
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,19 +33,18 @@ import com.victorl000.spotipass.ui.homeview.discover.DiscoveredProfileList
 import java.util.UUID
 
 
+private const val TAG = "HOMEPROFILEVIEW"
 @Composable
 fun HomeProfileView(
     homeProfileViewModel: HomeProfileViewModel
 ) {
-    val profileFlow = homeProfileViewModel.observeProfileFlow().collectAsState()
+    val profile by homeProfileViewModel.profileState.collectAsState()
     Column (modifier = Modifier.padding(15.dp).fillMaxWidth()){
         Text("IDK")
-        TextField(value = profileFlow.value?.username ?: "", onValueChange = {homeProfileViewModel.updateValue(profileFlow.value?.copy(username = it) ?: SPProfile(
-            profileId = UUID.randomUUID().toString(),
-            username = it,
-            spotifyUserId = "",
-            spotifyUrl = "",
-        ))})
+        TextField(value = profile.username,
+            onValueChange = {
+                homeProfileViewModel.updateValue(profile.copy(username = it))
+            })
         Button(onClick = {homeProfileViewModel.refreshToken()}) {Text("Refresh Token")}
     }
 }

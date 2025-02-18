@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.victorl000.spotipass.domain.repository.BleRepository
 import com.victorl000.spotipass.model.SPReceivedData
+import com.victorl000.spotipass.ui.loginview.AccountState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,18 +18,19 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeDiscoverViewModel @Inject constructor(
     private val repository: BleRepository,
-    private val flow: MutableStateFlow<List<SPReceivedData>>,
-    private val transferFlow: MutableStateFlow<SPReceivedData?>,
     @ApplicationContext
     private val context: Context
 ) : ViewModel() {
+    private val _discoverListFlow = MutableStateFlow<List<SPReceivedData>>(listOf())
 
     fun updateValue(newValue: SPReceivedData) {
-        flow.value += newValue
+        _discoverListFlow.value += newValue
     }
+
     init {
         viewModelScope.launch {
-            transferFlow.collect {
+            // TODO: the viewmodel should be in charge of storing the list of discovered users.
+            repository.bleStart().collect {
                 it?.let {
                     updateValue(it)
                 }
@@ -36,6 +38,5 @@ class HomeDiscoverViewModel @Inject constructor(
         }
     }
 
-
-    fun observeDiscoverListFlow(): StateFlow<List<SPReceivedData>> = flow.asStateFlow()
+    fun observeDiscoverListFlow(): StateFlow<List<SPReceivedData>> = _discoverListFlow.asStateFlow()
 }

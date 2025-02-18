@@ -14,40 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-//    @Provides
-//    @Singleton
-//    fun provideBleApi() : BleApi{
-//        return object : BleApi {
-//            override fun bleStart() {
-//                println("STARTED")
-//            }
-//        }
-//    }
-//
-
-    @Provides
-    @Singleton
-    fun provideTransferData() : MutableStateFlow<SPReceivedData?> = MutableStateFlow(null)
-
-    @Provides
-    @Singleton
-    fun provideTransferListFlow() : MutableStateFlow<List<SPReceivedData>> = MutableStateFlow(emptyList())
-
-    @Provides
-    @Singleton
-    fun provideProfileFlow() : MutableStateFlow<SPProfile?> = MutableStateFlow(null)
-
-    @Provides
-    @Singleton
-    @Named("accessToken")
-    fun provideAccessTokenFlow() : MutableStateFlow<String?> = MutableStateFlow(null)
-
-    @Provides
-    @Singleton
-    @Named("refreshToken")
-    fun provideRefreshTokenFlow() : MutableStateFlow<String?> = MutableStateFlow(null)
-
     @Provides
     @Singleton
     @Named("loggedIn")

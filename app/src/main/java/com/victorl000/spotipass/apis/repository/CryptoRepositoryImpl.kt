@@ -20,13 +20,17 @@ class CryptoRepositoryImpl @Inject constructor(
 //    @Named("loggedIn") private val loggedInFlow : MutableStateFlow<Boolean>,
 ) : CryptoRepository {
     override fun saveTokens(accessToken : String, refreshToken : String?) {
-        cryptoApi.saveRefreshToken(appContext, accessToken)
+        cryptoApi.saveAccessToken(appContext, accessToken)
         if(refreshToken != null)
             cryptoApi.saveRefreshToken(appContext, refreshToken)
     }
 
     override fun getAccessToken(): String? {
         return cryptoApi.getAccessToken(appContext)
+    }
+
+    override fun getRefreshToken(): String? {
+        return cryptoApi.getRefreshToken(appContext)
     }
 
     override fun saveLoginState(loginState : Boolean) {

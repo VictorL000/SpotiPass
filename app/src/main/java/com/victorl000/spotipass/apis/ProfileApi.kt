@@ -1,0 +1,1 @@
+package com.victorl000.spotipass.apisimport android.content.Contextimport androidx.security.crypto.EncryptedSharedPreferencesimport androidx.security.crypto.MasterKeysimport com.victorl000.spotipass.model.SPProfileinterface ProfileApi {    fun getCurrentProfile() : SPProfile    fun setCurrentProfile(p : SPProfile)}

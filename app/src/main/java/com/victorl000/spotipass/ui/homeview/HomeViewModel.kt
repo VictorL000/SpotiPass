@@ -10,11 +10,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: BleRepository,
-    private val flow: MutableStateFlow<SPReceivedData?>
 ) : ViewModel() {
+
     init {
         startBLEService()
     }
+
     fun startBLEService() {
         repository.bleStart()
     }

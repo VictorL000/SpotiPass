@@ -7,18 +7,17 @@ import com.victorl000.spotipass.model.SPProfile
 import com.victorl000.spotipass.model.SPReceivedData
 import com.victorl000.spotipass.model.SPTransmittedData
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class BleRepositoryImpl @Inject constructor(
     private val api : BleApi,
     private val appContext : Application,
-    private val flow : MutableStateFlow<SPReceivedData?>,
 ) : BleRepository{
-    override fun bleStart() {
+    override fun bleStart() : StateFlow<SPReceivedData?> {
 //        val responseState = flow.asStateFlow()
-        api.bleStart(appContext, flow)
+        return api.bleStart(appContext)
 //        val appName = appContext.getString(com.victorl000.spotipass.R.string.app_name)
-//        println(appName)
     }
 
     override fun updateBroadcastMessage(newBroadcast : SPTransmittedData) {

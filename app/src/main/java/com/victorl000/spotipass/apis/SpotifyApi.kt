@@ -23,4 +23,14 @@ interface SpotifyApi {
         @Field("refresh_token") refreshToken: String,
         @Field("client_id") clientId: String,
     ): SpotifyTokenResponse
+
+    @FormUrlEncoded
+    @POST("api/token")
+    fun getAccessToken(
+        @Field("code") code: String,
+        @Field("redirect_uri") redirectUri: String,
+        @Field("grant_type") grantType: String = "authorization_code",
+        @Field("client_id") clientId: String,
+        @Field("client_secret") clientSecret: String,
+    ): Call<SpotifyTokenResponse>
 }

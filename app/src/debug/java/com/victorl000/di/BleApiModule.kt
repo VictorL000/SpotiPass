@@ -1,6 +1,7 @@
 package com.victorl000.di
 
 import android.app.Application
+import android.util.Log
 import com.victorl000.spotipass.apis.BleApi
 import com.victorl000.spotipass.model.SPReceivedData
 import com.victorl000.spotipass.model.SPTransmittedData
@@ -12,6 +13,8 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
@@ -27,14 +30,17 @@ object BleApiModule {
     @Singleton
     fun provideBleApi() : BleApi {
         return object : BleApi {
+            private val TAG = "BleApi"
             var message = getMockAccount()
-            override fun bleStart(appContext : Application, flow : MutableStateFlow<SPReceivedData?>) {
+            override fun bleStart(appContext : Application) : StateFlow<SPReceivedData?> {
+                val flow = MutableStateFlow<SPReceivedData?>(null)
                 GlobalScope.launch { // JUST FOR DEBUG PURPOSES
                     repeat(20) {
                         delay(2000)
                         flow.emit(message)
                     }
                 }
+                return flow.asStateFlow()
             }
             override fun updateBroadcastMessage(newMessage : SPTransmittedData) {
                 message = SPReceivedData(

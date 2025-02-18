@@ -16,6 +16,7 @@ import com.spotify.sdk.android.auth.AuthorizationResponse.Type.TOKEN
 import com.victorl000.spotipass.BuildConfig
 import com.victorl000.spotipass.model.AccountResponse
 import com.victorl000.spotipass.apis.AccountApi
+import com.victorl000.spotipass.domain.repository.CryptoRepository
 import com.victorl000.spotipass.domain.repository.SpotifyRepository
 import com.victorl000.spotipass.model.SpotifyTokenResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +37,8 @@ private const val CLIENT_ID = BuildConfig.CLIENT_ID
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val spotifyRepository: SpotifyRepository
+    private val spotifyRepository: SpotifyRepository,
+    private val cryptoRepository: CryptoRepository,
 ): ViewModel() {
     private val _accountState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountState = _accountState.asStateFlow()
@@ -88,7 +90,7 @@ class LoginViewModel @Inject constructor(
                                     Log.d(TAG, "Access Token: ${tokenResponse?.access_token}")
                                     Log.d(TAG, "Refresh Token: ${tokenResponse?.refresh_token}")
                                     if(tokenResponse != null)
-                                        spotifyRepository.updateTokens(tokenResponse.access_token, tokenResponse?.refresh_token)
+                                        cryptoRepository.saveTokens(tokenResponse.access_token, tokenResponse.refresh_token)
                                     onLogin()
                                 } else {
                                     println("Error: ${response.errorBody()?.string()}")
