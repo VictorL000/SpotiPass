@@ -14,6 +14,7 @@ import com.victorl000.spotipass.ui.homeview.discover.HomeDiscoverViewModel
 import com.victorl000.spotipass.ui.homeview.maps.HomeMapsViewModel
 import com.victorl000.spotipass.ui.homeview.profile.HomeProfileViewModel
 import com.victorl000.spotipass.ui.loginview.LoginView
+import com.victorl000.spotipass.ui.loginview.LoginViewModel
 import com.victorl000.spotipass.ui.theme.SpotiPassTheme
 import dagger.hilt.android.AndroidEntryPoint
 import gupuru.streetpassble.StreetPassBle
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
     private val homeDiscoverViewModel : HomeDiscoverViewModel by viewModels()
     private val homeMapsViewModel : HomeMapsViewModel by viewModels()
     private val homeProfileViewModel : HomeProfileViewModel by viewModels()
+    private val loginViewModel : LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +40,11 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = HomeScreen
+                    startDestination = LoginScreen
                 ) {
                     composable<LoginScreen> {
                         LoginView(
+                            loginViewModel,
                             onLogin = {
                                 navController.navigate(HomeScreen)
                                 BuildConfig.CLIENT_SECRET

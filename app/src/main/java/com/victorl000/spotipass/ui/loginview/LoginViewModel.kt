@@ -3,7 +3,6 @@ package com.victorl000.spotipass.ui.loginview
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Base64
 import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
@@ -16,16 +15,17 @@ import com.spotify.sdk.android.auth.AuthorizationResponse.Type.ERROR
 import com.spotify.sdk.android.auth.AuthorizationResponse.Type.TOKEN
 import com.victorl000.spotipass.BuildConfig
 import com.victorl000.spotipass.model.AccountResponse
-import com.victorl000.spotipass.apis.SpotifyApi
+import com.victorl000.spotipass.apis.AccountApi
+import com.victorl000.spotipass.domain.repository.SpotifyRepository
 import com.victorl000.spotipass.model.SpotifyTokenResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.security.MessageDigest
-import java.security.SecureRandom
+import javax.inject.Inject
 import kotlin.arrayOf
 
 private const val TAG = "LoginViewModel"
@@ -34,7 +34,10 @@ private const val REDIRECT_URI = BuildConfig.REDIRECT_URI
 private const val CLIENT_ID = BuildConfig.CLIENT_ID
 
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val spotifyRepository: SpotifyRepository
+): ViewModel() {
     private val _accountState = MutableStateFlow<AccountState>(AccountState.Loading)
     val accountState = _accountState.asStateFlow()
     var accessToken : String? = null
@@ -68,7 +71,7 @@ class LoginViewModel : ViewModel() {
 //                exchangeCodeForToken(context = )
                 viewModelScope.launch {
                     try {
-                        val call = SpotifyApi.accountsService.getAccessToken(
+                        val call = AccountApi.accountsService.getAccessToken(
                             code = response.code,
                             redirectUri = BuildConfig.REDIRECT_URI,
                             clientId = CLIENT_ID,
@@ -84,6 +87,8 @@ class LoginViewModel : ViewModel() {
                                     val tokenResponse = response.body()
                                     Log.d(TAG, "Access Token: ${tokenResponse?.access_token}")
                                     Log.d(TAG, "Refresh Token: ${tokenResponse?.refresh_token}")
+                                    if(tokenResponse != null)
+                                        spotifyRepository.updateTokens(tokenResponse.access_token, tokenResponse?.refresh_token)
                                     onLogin()
                                 } else {
                                     println("Error: ${response.errorBody()?.string()}")
@@ -111,7 +116,7 @@ class LoginViewModel : ViewModel() {
         accessToken?.let{ accessToken ->
             viewModelScope.launch {
                 try {
-                    val response = SpotifyApi.apiService.getAccount(
+                    val response = AccountApi.apiService.getAccount(
                         apiKey = "Bearer $accessToken"
                     )
                     _accountState.value = AccountState.Success(response)

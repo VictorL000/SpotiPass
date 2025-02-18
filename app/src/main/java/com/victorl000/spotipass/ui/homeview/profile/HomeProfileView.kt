@@ -44,5 +44,6 @@ fun HomeProfileView(
             spotifyUserId = "",
             spotifyUrl = "",
         ))})
+        Button(onClick = {homeProfileViewModel.refreshToken()}) {Text("Refresh Token")}
     }
 }

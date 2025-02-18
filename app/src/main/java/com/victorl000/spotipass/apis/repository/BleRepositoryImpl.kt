@@ -13,7 +13,6 @@ class BleRepositoryImpl @Inject constructor(
     private val api : BleApi,
     private val appContext : Application,
     private val flow : MutableStateFlow<SPReceivedData?>,
-    private val profileFlow : MutableStateFlow<SPProfile>,
 ) : BleRepository{
     override fun bleStart() {
 //        val responseState = flow.asStateFlow()

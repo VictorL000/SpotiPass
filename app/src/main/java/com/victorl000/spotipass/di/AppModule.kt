@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -35,4 +37,19 @@ object AppModule {
     @Provides
     @Singleton
     fun provideProfileFlow() : MutableStateFlow<SPProfile?> = MutableStateFlow(null)
+
+    @Provides
+    @Singleton
+    @Named("accessToken")
+    fun provideAccessTokenFlow() : MutableStateFlow<String?> = MutableStateFlow(null)
+
+    @Provides
+    @Singleton
+    @Named("refreshToken")
+    fun provideRefreshTokenFlow() : MutableStateFlow<String?> = MutableStateFlow(null)
+
+    @Provides
+    @Singleton
+    @Named("loggedIn")
+    fun provideLoggedInFlow() : MutableStateFlow<Boolean> = MutableStateFlow(false)
 }

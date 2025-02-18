@@ -20,7 +20,7 @@ import kotlin.random.Random
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DebugModule {
+object BleApiModule {
 
     @OptIn(DelicateCoroutinesApi::class)
     @Provides
@@ -55,10 +55,4 @@ object DebugModule {
         spotifyUrl = "https://open.spotify.com/user/22zc36dej2wpy6dm23eu5bsqq?si=0ffbb5a380854a0c",
         timestamp = LocalDateTime.now().minusSeconds(minusSeconds)
     )
-//
-//    @Provides
-//    @Singleton
-//    fun provideBleRepository(api : BleApi, app : Application) : BleRepository {
-//        return BleRepositoryImpl(api, app)
-//    }
 }

@@ -2,6 +2,7 @@ package com.victorl000.spotipass.ui.loginview
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,12 +15,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.victorl000.spotipass.BuildConfig
+import com.victorl000.spotipass.ui.homeview.profile.HomeProfileViewModel
+import kotlin.getValue
 
 private const val TAG = "LoginView"
 
 @Composable
-fun LoginView(onLogin: () -> Unit) {
-    val vm = viewModel<LoginViewModel>()
+fun LoginView(vm : LoginViewModel, onLogin: () -> Unit) {
     val context = LocalContext.current
 
     val authLauncher = rememberLauncherForActivityResult(

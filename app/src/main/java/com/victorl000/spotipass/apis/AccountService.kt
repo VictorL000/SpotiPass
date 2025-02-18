@@ -31,7 +31,7 @@ interface AccountService {
     ): Call<SpotifyTokenResponse>
 }
 
-object SpotifyApi {
+object AccountApi {
 
     val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = Level.BODY
