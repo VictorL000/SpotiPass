@@ -1,6 +1,7 @@
 package com.victorl000.spotipass.ui.homeview.discover
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.victorl000.spotipass.domain.repository.BleRepository

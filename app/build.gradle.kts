@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId = "com.victorl000.spotipass"
-        minSdk = 31
+        minSdk = 30
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -56,6 +56,19 @@ android {
             buildConfigField("String", "CLIENT_SECRET", "\"${clientSecret}\"")
             buildConfigField("String", "CLIENT_ID", "\"${clientId}\"")
             buildConfigField("String", "REDIRECT_URI", "\"${redirectUri}\"")
+        }
+    }
+    flavorDimensions += "ble"
+    productFlavors {
+        create("live") {
+            dimension = "ble"
+            applicationIdSuffix = ".live"
+            versionNameSuffix = "-live"
+        }
+        create("mock") {
+            dimension = "ble"
+            applicationIdSuffix = ".mock"
+            versionNameSuffix = "-mock"
         }
     }
     compileOptions {

@@ -1,5 +1,6 @@
 package com.victorl000.spotipass.ui.homeview
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.victorl000.spotipass.domain.repository.BleRepository
 import com.victorl000.spotipass.model.SPReceivedData
@@ -13,7 +14,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     init {
-        startBLEService()
+//        startBLEService()
     }
 
     fun startBLEService() {

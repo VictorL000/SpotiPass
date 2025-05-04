@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.victorl000.spotipass.model.SPReceivedData
 import java.time.Duration
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 
 @Composable
@@ -97,11 +99,18 @@ private fun getMockAccount () = SPReceivedData(
     spotifyUserId = "22zc36dej2wpy6dm23eu5bsqq",
     spotifyUrl = "https://open.spotify.com/user/22zc36dej2wpy6dm23eu5bsqq?si=0ffbb5a380854a0c",
     timestamp = LocalDateTime.now()
+        .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
 )
 
-private fun timeAgo(timestamp: LocalDateTime): String {
+private fun timeAgo(timestamp: Long): String {
+    val localDateTime = Instant.ofEpochMilli(timestamp)
+        .atZone(ZoneId.systemDefault())
+        .toLocalDateTime()
+
     val now = LocalDateTime.now()
-    val duration = Duration.between(timestamp, now)
+    val duration = Duration.between(localDateTime, now)
 
     return when {
         duration.seconds < 60 -> "Just now"

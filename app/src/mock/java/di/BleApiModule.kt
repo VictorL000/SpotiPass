@@ -1,7 +1,6 @@
-package com.victorl000.di
+package di
 
 import android.app.Application
-import android.util.Log
 import com.victorl000.spotipass.apis.BleApi
 import com.victorl000.spotipass.model.SPReceivedData
 import com.victorl000.spotipass.model.SPTransmittedData
@@ -17,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 import javax.inject.Singleton
 import kotlin.random.Random
@@ -48,8 +48,9 @@ object BleApiModule {
                     newMessage.username,
                     newMessage.spotifyUserId,
                     newMessage.spotifyUrl,
-                    timestamp = LocalDateTime.now().minusSeconds(Random.nextLong(3600))
-                )
+                    timestamp = LocalDateTime.now().minusSeconds(Random.nextLong(3600)).atZone(ZoneId.systemDefault())
+                        .toInstant()
+                        .toEpochMilli())
             }
         }
     }
@@ -59,6 +60,8 @@ object BleApiModule {
         username = "funniguy743",
         spotifyUserId = "22zc36dej2wpy6dm23eu5bsqq",
         spotifyUrl = "https://open.spotify.com/user/22zc36dej2wpy6dm23eu5bsqq?si=0ffbb5a380854a0c",
-        timestamp = LocalDateTime.now().minusSeconds(minusSeconds)
+        timestamp = LocalDateTime.now().minusSeconds(minusSeconds).atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
     )
 }

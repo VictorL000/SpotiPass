@@ -1,4 +1,4 @@
-package com.victorl000.di
+package di
 
 import com.victorl000.spotipass.apis.repository.BleRepositoryImpl
 import com.victorl000.spotipass.domain.repository.BleRepository
