@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.victorl000.spotipass.SplashScreen
 import com.victorl000.spotipass.ui.homeview.HomePageView
 import com.victorl000.spotipass.ui.homeview.HomeViewModel
 import com.victorl000.spotipass.ui.homeview.discover.HomeDiscoverViewModel
@@ -15,6 +16,8 @@ import com.victorl000.spotipass.ui.homeview.maps.HomeMapsViewModel
 import com.victorl000.spotipass.ui.homeview.profile.HomeProfileViewModel
 import com.victorl000.spotipass.ui.loginview.LoginView
 import com.victorl000.spotipass.ui.loginview.LoginViewModel
+import com.victorl000.spotipass.ui.splashview.SplashView
+import com.victorl000.spotipass.ui.splashview.SplashViewModel
 import com.victorl000.spotipass.ui.theme.SpotiPassTheme
 import dagger.hilt.android.AndroidEntryPoint
 import gupuru.streetpassble.StreetPassBle
@@ -31,6 +34,7 @@ class MainActivity : ComponentActivity() {
     private val homeMapsViewModel : HomeMapsViewModel by viewModels()
     private val homeProfileViewModel : HomeProfileViewModel by viewModels()
     private val loginViewModel : LoginViewModel by viewModels()
+    private val splashViewModel : SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +44,15 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = LoginScreen
+                    startDestination = SplashScreen
                 ) {
+                    composable<SplashScreen> {
+                        SplashView (
+                            splashViewModel,
+                            {navController.navigate(HomeScreen)},
+                            {navController.navigate(LoginScreen)},
+                        )
+                    }
                     composable<LoginScreen> {
                         LoginView(
                             loginViewModel,
@@ -70,3 +81,6 @@ object LoginScreen
 
 @Serializable
 object HomeScreen
+
+@Serializable
+object SplashScreen
