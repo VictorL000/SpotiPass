@@ -13,6 +13,4 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeMapsViewModel @Inject constructor(
     private val repository: BleRepository,
-) : ViewModel() {
-
-}
+) : ViewModel()

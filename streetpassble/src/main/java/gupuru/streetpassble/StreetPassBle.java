@@ -37,7 +37,7 @@ public class StreetPassBle implements ScanBle.OnScanBleListener,
         AdvertiseBle.OnAdvertiseBleListener, BLEServer.OnBLEServerListener,
         BLEGattServer.OnBLEGattServerListener {
 
-    private Context context;
+    private final Context context;
     private Handler handler;
     private OnStreetPassBleListener onStreetPassBleListener;
     private OnStreetPassBleServerListener onStreetPassBleServerListener;

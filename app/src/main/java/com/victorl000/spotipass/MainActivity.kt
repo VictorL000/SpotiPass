@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import gupuru.streetpassble.StreetPassBle
 import kotlinx.serialization.Serializable
 
-private const val LOGIN_REQUEST_CODE = 1337;
+private const val LOGIN_REQUEST_CODE = 1337
 private const val TAG = "MainActivity"
 
 @AndroidEntryPoint

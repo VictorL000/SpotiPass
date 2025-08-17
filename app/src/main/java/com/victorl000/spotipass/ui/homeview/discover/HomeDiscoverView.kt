@@ -48,7 +48,7 @@ fun HomeDiscoverView(
 fun DiscoveredProfileList(
     @PreviewParameter(DiscoverPreviewParameterProvider::class) items : List<SPReceivedData>
 ) {
-    LazyColumn (){
+    LazyColumn {
         items.forEach {
             item {
                 DiscoveredProfileRow(it)

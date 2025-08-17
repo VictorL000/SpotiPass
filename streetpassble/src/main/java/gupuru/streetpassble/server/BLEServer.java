@@ -21,7 +21,7 @@ import gupuru.streetpassble.parcelable.TransferData;
 public class BLEServer extends BluetoothGattCallback {
 
     private BluetoothGatt bluetoothGatt;
-    private StreetPassSettings streetPassSettings;
+    private final StreetPassSettings streetPassSettings;
     private OnBLEServerListener onBLEServerListener;
     private String message;
 

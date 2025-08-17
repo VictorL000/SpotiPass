@@ -10,6 +10,7 @@ import android.content.Context;
 import android.os.ParcelUuid;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +23,11 @@ import gupuru.streetpassble.server.BLEServer;
  */
 public class ScanBle extends ScanCallback {
 
-    private Context context;
+    private final Context context;
     private OnScanBleListener onScanBleListener;
-    private BluetoothAdapter bluetoothAdapter;
-    private BLEServer bleServer;
-    private ArrayList<DeviceData> deviceDataArrayList = new ArrayList<>();
+    private final BluetoothAdapter bluetoothAdapter;
+    private final BLEServer bleServer;
+    private final ArrayList<DeviceData> deviceDataArrayList = new ArrayList<>();
 
     public ScanBle(Context context, BLEServer bleServer, BluetoothAdapter bluetoothAdapter) {
         this.context = context;
@@ -112,12 +113,7 @@ public class ScanBle extends ScanCallback {
             }
             //ServiceDataをstringに変換
             if (data != null) {
-                try {
-                    serviceData = new String(data, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    return;
-                }
+                serviceData = new String(data, StandardCharsets.UTF_8);
             }
             //advertisingしている端末の情報
             DeviceData deviceData = new DeviceData(

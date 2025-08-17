@@ -30,7 +30,7 @@ import javax.inject.Inject
 import kotlin.arrayOf
 
 private const val TAG = "LoginViewModel"
-private const val LOGIN_REQUEST_CODE = 1337;
+private const val LOGIN_REQUEST_CODE = 1337
 private const val REDIRECT_URI = BuildConfig.REDIRECT_URI
 private const val CLIENT_ID = BuildConfig.CLIENT_ID
 

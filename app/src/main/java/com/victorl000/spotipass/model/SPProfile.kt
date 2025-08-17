@@ -7,4 +7,7 @@ data class SPProfile (
     val username : String,
     val spotifyUserId : String,
     val spotifyUrl : String,
+
+    val bio: String,
+    val integrations: List<String>,
 )

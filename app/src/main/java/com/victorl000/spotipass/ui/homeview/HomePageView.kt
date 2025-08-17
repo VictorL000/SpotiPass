@@ -51,7 +51,7 @@ fun HomePageView(
 
     Scaffold (
         bottomBar = {
-            NavigationBar() {
+            NavigationBar {
                 items.forEachIndexed { index, item ->
                     NavigationBarItem(
                         icon = {
