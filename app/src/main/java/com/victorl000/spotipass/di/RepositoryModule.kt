@@ -4,10 +4,12 @@ import com.victorl000.spotipass.apis.repository.BleRepositoryImpl
 import com.victorl000.spotipass.apis.repository.CryptoRepositoryImpl
 import com.victorl000.spotipass.apis.repository.ProfileRepositoryImpl
 import com.victorl000.spotipass.apis.repository.SpotifyRepositoryImpl
+import com.victorl000.spotipass.apis.repository.UserProfileRepositoryImpl
 import com.victorl000.spotipass.domain.repository.BleRepository
 import com.victorl000.spotipass.domain.repository.CryptoRepository
 import com.victorl000.spotipass.domain.repository.ProfileRepository
 import com.victorl000.spotipass.domain.repository.SpotifyRepository
+import com.victorl000.spotipass.domain.repository.UserProfileRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,23 +24,29 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun bindBleRepository(
         bleRepositoryImpl: BleRepositoryImpl
-    ) : BleRepository
+    ): BleRepository
 
     @Binds
     @Singleton
     abstract fun bindCryptoRepository(
         cryptoRepositoryImpl: CryptoRepositoryImpl
-    ) : CryptoRepository
+    ): CryptoRepository
 
     @Binds
     @Singleton
     abstract fun bindProfileRepository(
         profileRepositoryImpl: ProfileRepositoryImpl
-    ) : ProfileRepository
+    ): ProfileRepository
 
     @Binds
     @Singleton
     abstract fun bindSpotifyRepository(
         spotifyRepositoryImpl: SpotifyRepositoryImpl
-    ) : SpotifyRepository
+    ): SpotifyRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserProfileRepository(
+        userProfileRepositoryImpl: UserProfileRepositoryImpl
+    ): UserProfileRepository
 }
