@@ -19,8 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ProfileModule {
-
-    @Provides
     @Singleton
     fun getProfileApiClient() : ProfileApi {
         return object : ProfileApi {
