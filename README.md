@@ -1,4 +1,4 @@
-# SpotiPass
+# StreetSpot
 
 StreetSpot (formerly SpotiPass), a blend of Spotify and Nintendo's StreetPass, offers a unique way to discover and connect with other music enthusiasts. By leveraging Bluetooth Low Energy (BLE), StreetSpot allows users to seamlessly share their musical tastes with others they pass by.
 
