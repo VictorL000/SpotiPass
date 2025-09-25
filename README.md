@@ -18,3 +18,10 @@ Users create a StreetSpot profile by securely signing into their Spotify account
 *   **User Blocking**
 *   **Music Heatmap**
 *   **Share currently listening to**
+
+## Tech Stack
+
+*   Kotlin
+*   Java
+*   Hilt
+*   Spotify
